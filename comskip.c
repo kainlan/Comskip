@@ -8768,7 +8768,7 @@ FILE* LoadSettings(int argc, char ** argv)
     struct arg_lit*		cl_use_cuvid			= arg_lit0(NULL, "cuvid", "Use NVIDIA Video Decoder (CUVID), if available");
     struct arg_lit*		cl_use_vdpau			= arg_lit0(NULL, "vdpau", "Use NVIDIA Video Decode and Presentation API (VDPAU), if available");
     struct arg_lit*		cl_use_dxva2			= arg_lit0(NULL, "dxva2", "Use DXVA2 Video Decode and Presentation API (DXVA2), if available");
-    struct arg_lit*		cl_use_qsv			= arg_lit0(NULL, "qsv", "Use Intel Video Decoder (QSV), if available");
+    struct arg_lit*		cl_use_qsv				= arg_lit0(NULL, "qsv", "Use Intel Video Decoder (QSV), if available");
     struct arg_lit*		cl_list_decoders		= arg_lit0(NULL, "decoders", "List all decoders and exit");
     struct arg_int*		cl_threads				= arg_int0(NULL, "threads", "<int>", "The number of threads to use");
     struct arg_int*		cl_verbose				= arg_intn("v", "verbose", NULL, 0, 1, "Verbose level");
@@ -8799,6 +8799,7 @@ FILE* LoadSettings(int argc, char ** argv)
         cl_use_cuvid,
         cl_use_vdpau,
         cl_use_dxva2,
+        cl_use_qsv,
         cl_list_decoders,
         cl_threads,
         cl_pid,
