@@ -1285,7 +1285,7 @@ static int    prev_strange_framenum = 0;
             sws_scale(is->img_convert_ctx, (const uint8_t * const *)is->pFrame->data, is->pFrame->linesize, 0, is->pFrame->height, newframe->data, newframe->linesize);
             av_frame_unref(is->pFrame);
             is->pFrame = newframe;
-			Debug(0, "desiredWidth: %d desiredHeight: %d", desiredWidth, desiredHeight);
+			//Debug(0, "desiredWidth: %d desiredHeight: %d", desiredWidth, desiredHeight);
         }
 
         if(is->dec_ctx->framerate.den && is->dec_ctx->framerate.num)
