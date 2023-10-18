@@ -1256,36 +1256,17 @@ static int    prev_strange_framenum = 0;
     {
         frameFinished = 1;
         // convert to 8bit
-		//Debug(0, "is->pFrame->format: %d", is->pFrame->format);
-        if (is->pFrame->format == AV_PIX_FMT_YUV420P10LE || lowres>0) {
-			int desiredWidth = is->pFrame->width;
-			int desiredHeight = is->pFrame->height;
-			switch(lowres)
-			{
-				case 1:
-				{
-					desiredWidth >>= 1;
-					desiredHeight >>= 1;
-				}
-				break;
-				case 2:
-				{
-					desiredWidth >>= 2;
-					desiredHeight >>= 2;
-				}
-				break;
-			}
-            is->img_convert_ctx = sws_getCachedContext(is->img_convert_ctx, is->pFrame->width, is->pFrame->height, is->pFrame->format, desiredWidth, desiredHeight, AV_PIX_FMT_YUV420P, SWS_POINT, NULL, NULL, NULL);
+        if (is->pFrame->format == AV_PIX_FMT_YUV420P10LE) {
+            is->img_convert_ctx = sws_getCachedContext(is->img_convert_ctx, is->pFrame->width, is->pFrame->height, is->pFrame->format, is->pFrame->width, is->pFrame->height, AV_PIX_FMT_YUV420P, SWS_POINT, NULL, NULL, NULL);
             AVFrame *newframe = av_frame_alloc();
             av_frame_copy_props(newframe, is->pFrame);
             newframe->format = AV_PIX_FMT_YUV420P;
-            newframe->width = desiredWidth;
-            newframe->height = desiredHeight;
+            newframe->width = is->pFrame->width;
+            newframe->height = is->pFrame->height;
             av_frame_get_buffer(newframe, 0);
             sws_scale(is->img_convert_ctx, (const uint8_t * const *)is->pFrame->data, is->pFrame->linesize, 0, is->pFrame->height, newframe->data, newframe->linesize);
             av_frame_unref(is->pFrame);
             is->pFrame = newframe;
-			//Debug(0, "desiredWidth: %d desiredHeight: %d", desiredWidth, desiredHeight);
         }
 
         if(is->dec_ctx->framerate.den && is->dec_ctx->framerate.num)
@@ -1781,12 +1762,12 @@ int stream_component_open(VideoState *is, int stream_index)
 		{
 			case 1:
 			{
-				codecCtx->width = codecCtx->width >> 1;
+				codecCtx->width >>= 1;
 			}
 			break;
 			case 2:
 			{
-				codecCtx->width = codecCtx->width >> 2;
+				codecCtx->width >>= 2;
 			}
 			break;
 		}
