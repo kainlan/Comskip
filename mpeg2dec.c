@@ -1755,22 +1755,11 @@ int stream_component_open(VideoState *is, int stream_index)
             Debug(0, "h.264 video can only be processed at full speed by the Donator version\n");
 #endif
         }
-        else
-        {
+       
 #ifdef DONATOR
-            int w;
-            if (lowres == 10) {
-                w = codecCtx->width;
-                lowres = 0;
-                while (w > 600) {
-                    w = w >> 1;
-                    lowres++;
-                }
-            }
- //           codecCtx->lowres = lowres;
+		codecCtx->lowres = lowres;
 #endif
 //            /* if(lowres) */ codecCtx->flags |= CODEC_FLAG_EMU_EDGE;
-        }
 //        codecCtx->flags2 |= CODEC_FLAG2_FAST;
 
         if (codecCtx->codec_id != AV_CODEC_ID_MPEG1VIDEO) {
