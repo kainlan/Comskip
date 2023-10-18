@@ -1256,6 +1256,7 @@ static int    prev_strange_framenum = 0;
     {
         frameFinished = 1;
         // convert to 8bit
+		Debug(0, "is->pFrame->format: %d", is->pFrame->format);
         if (is->pFrame->format == AV_PIX_FMT_YUV420P10LE) {
 			int desiredWidth = is->pFrame->width;
 			int desiredHeight = is->pFrame->height;
