@@ -1761,12 +1761,12 @@ int stream_component_open(VideoState *is, int stream_index)
 		{
 			case 1:
 			{
-				w = w >> 1;
+				codecCtx->width = codecCtx->width >> 1;
 			}
 			break;
 			case 2:
 			{
-				w = w >> 2;
+				codecCtx->width = codecCtx->width >> 2;
 			}
 			break;
 		}
