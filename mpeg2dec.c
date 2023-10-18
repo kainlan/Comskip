@@ -1757,6 +1757,19 @@ int stream_component_open(VideoState *is, int stream_index)
         }
        
 #ifdef DONATOR
+		switch (lowres)
+		{
+			case 1:
+			{
+				w = w >> 1;
+			}
+			break;
+			case 2:
+			{
+				w = w >> 2;
+			}
+			break;
+		}
 		codecCtx->lowres = lowres;
 #endif
 //            /* if(lowres) */ codecCtx->flags |= CODEC_FLAG_EMU_EDGE;
