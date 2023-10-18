@@ -1757,7 +1757,7 @@ int stream_component_open(VideoState *is, int stream_index)
         }
        
 #ifdef DONATOR
-		Debug(0, "codecCtx->width: %d\n", codecCtx->width);
+		Debug(1, "codecCtx->width: %d\n", codecCtx->width);
 		switch (lowres)
 		{
 			case 1:
@@ -1772,7 +1772,7 @@ int stream_component_open(VideoState *is, int stream_index)
 			break;
 		}
 		codecCtx->lowres = lowres;
-		Debug(0, "Post codecCtx->width: %d codecCtx->lowres: %d\n", codecCtx->width, codecCtx->lowres);
+		Debug(1, "Post codecCtx->width: %d codecCtx->lowres: %d\n", codecCtx->width, codecCtx->lowres);
 #endif
 //            /* if(lowres) */ codecCtx->flags |= CODEC_FLAG_EMU_EDGE;
 //        codecCtx->flags2 |= CODEC_FLAG2_FAST;
