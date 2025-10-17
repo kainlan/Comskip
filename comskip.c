@@ -735,11 +735,8 @@ int					sceneChangePercent;
 bool				lastFrameWasBlack = false;
 bool				lastFrameWasSceneChange = false;
 
-<<<<<<< HEAD
 #include <libavutil/avutil.h>  // only for DECLARE_ALIGNED
-=======
 
->>>>>>> upstream/master
 static long histogram[256];
 static long lastHistogram[256];
 
