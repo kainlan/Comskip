@@ -16,6 +16,7 @@
 #include "platform.h"
 #include "vo.h"
 #include <argtable2.h>
+#include <pthread.h>
 
 
 #include <libavformat/avformat.h>
@@ -734,7 +735,11 @@ int					sceneChangePercent;
 bool				lastFrameWasBlack = false;
 bool				lastFrameWasSceneChange = false;
 
+<<<<<<< HEAD
 #include <libavutil/avutil.h>  // only for DECLARE_ALIGNED
+=======
+
+>>>>>>> upstream/master
 static long histogram[256];
 static long lastHistogram[256];
 
@@ -977,7 +982,7 @@ int					FindBlackThreshold(double percentile);
 int					FindUniformThreshold(double percentile);
 void				OutputFrameArray(bool screenOnly);
 void                OutputBlackArray();
-void				OutputFrame();
+void				OutputFrame(int frame_number);
 void				OpenOutputFiles();
 void				InitializeFrameArray(long i);
 void				InitializeBlackArray(long i);
@@ -3321,7 +3326,7 @@ int DetectCommercials(int f, double pts)
         {
             if (delay_logo_search == 0 ||
                     (delay_logo_search == 1 && F2T(frame_count) > added_recording * 60) ||
-                    (F2T(frame_count) > delay_logo_search))
+                    (delay_logo_search > 1 && F2T(frame_count) > delay_logo_search))
             {
                 FillLogoBuffer();
                 if (logoBuffersFull)
@@ -8768,7 +8773,7 @@ FILE* LoadSettings(int argc, char ** argv)
     struct arg_lit*		cl_use_cuvid			= arg_lit0(NULL, "cuvid", "Use NVIDIA Video Decoder (CUVID), if available");
     struct arg_lit*		cl_use_vdpau			= arg_lit0(NULL, "vdpau", "Use NVIDIA Video Decode and Presentation API (VDPAU), if available");
     struct arg_lit*		cl_use_dxva2			= arg_lit0(NULL, "dxva2", "Use DXVA2 Video Decode and Presentation API (DXVA2), if available");
-    struct arg_lit*		cl_use_qsv				= arg_lit0(NULL, "qsv", "Use Intel Video Decoder (QSV), if available");
+    struct arg_lit*		cl_use_qsv				= arg_lit0(NULL, "qsv", "Use Intel Quick Sync Video acceleration (QSV), if available");
     struct arg_lit*		cl_list_decoders		= arg_lit0(NULL, "decoders", "List all decoders and exit");
     struct arg_int*		cl_threads				= arg_int0(NULL, "threads", "<int>", "The number of threads to use");
     struct arg_int*		cl_verbose				= arg_intn("v", "verbose", NULL, 0, 1, "Verbose level");
@@ -9263,6 +9268,12 @@ FILE* LoadSettings(int argc, char ** argv)
     }
 	
 	if (cl_use_qsv->count)
+    {
+        printf("Enabling use_qsv\n");
+        use_qsv = 1;
+    }
+
+    if (cl_use_qsv->count)
     {
         printf("Enabling use_qsv\n");
         use_qsv = 1;
@@ -16516,8 +16527,11 @@ void dump_data(char *start, int length)
 
 void close_data()
 {
+    if (output_data)
+    {
 	if (dump_data_file) {
 		fclose(dump_data_file);
 		dump_data_file = 0;
 	}
+    }
 }
